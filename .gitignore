@@ -16,7 +16,7 @@ migrate_working_dir/
 *.iws
 .idea/
 build/
-windows/
+/windows/
 .dart_tool/
 
 # The .vscode folder contains launch configuration and tasks you configure in
