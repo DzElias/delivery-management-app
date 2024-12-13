@@ -1,4 +1,6 @@
+import 'package:delivery_mgnt_app/bloc/dashboard/dashboard_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Menu extends StatelessWidget {
 const Menu({ Key? key }) : super(key: key);
@@ -16,9 +18,9 @@ const Menu({ Key? key }) : super(key: key);
             padding: const EdgeInsets.all(32.0),
             child: Text("Pedidos", style: TextStyle(color: Color(0xffE5E0E3, ),fontSize: 30, fontWeight: FontWeight.w400)),
           ),
-          MenuOption(icon: Icons.list_alt, title: "Nuevos"),
-          MenuOption(icon: Icons.pending_actions, title: "En preparacion"),
-          MenuOption(icon: Icons.delivery_dining, title: "En camino"),
+          MenuOption(icon: Icons.list_alt, title: "Nuevos", event: DashboardNewOrdersPageEvent(),),
+          MenuOption(icon: Icons.pending_actions, title: "En preparacion", event: DashboardInProgressOrdersPageEvent(),),
+          MenuOption(icon: Icons.delivery_dining, title: "En camino", event: DashboardOnTheWayOrdersPageEvent(),),
 
         ],
       ),
@@ -29,17 +31,22 @@ const Menu({ Key? key }) : super(key: key);
 class MenuOption extends StatelessWidget {
   final IconData icon;
   final String title;
-  const MenuOption({ super.key, required this.icon, required this.title });
+  final DashboardEvent event;
+  const MenuOption({ super.key, required this.icon, required this.title, required this.event });
 
   @override
   Widget build(BuildContext context){
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: (){},
+      onTap: (){
+        
+      },
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: (){},
+          onTap: (){
+            Provider.of<DashboardBloc>(context, listen: false).add(event);
+          },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 32),
             width: double.infinity,
